@@ -50,7 +50,13 @@ container.addChild(TestComponent)
 
 ```
 
-Soon will provide a small project :)
+## Demo
+
+https://pixi-gameobject-demo.netlify.app/
+
+Github link
+
+https://github.com/MercurialUroboros/pixi-gameobject-demo
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
