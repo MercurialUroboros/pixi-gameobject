@@ -9,8 +9,8 @@
     "dist/**"
   ],
   "scripts": {
-    "dev": "rollup -c --watch",
-    "build": "rollup -c && tsc",
+    "dev": "rollup -c -w",
+    "build": "tsc && rollup -c",
     "lintfix": "eslint . --ext .ts --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

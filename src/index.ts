@@ -1,6 +1,6 @@
 import { DisplayObject } from 'pixi.js'
 import { observe, unobserve, observable } from '@nx-js/observer-util'
-import { ComponentOptions } from './types'
+import { ComponentOptions } from './types/index'
 
 export class GameObject<T extends DisplayObject> extends DisplayObject {
   readonly instance: T

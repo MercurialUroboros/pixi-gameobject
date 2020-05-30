@@ -1,6 +1,8 @@
 import typescript from 'rollup-plugin-typescript2';
-import pkg from './package.json';
 import { getBabelOutputPlugin } from '@rollup/plugin-babel';
+import pkg from './package.json';
+
+let override = { compilerOptions: { declaration: false, emitDeclarationOnly: false } };
 
 export default {
   input: 'src/index.ts', // our source file
@@ -22,6 +24,7 @@ export default {
   plugins: [
     typescript({
       typescript: require('typescript'),
+      tsconfigOverride: override
     }),
     getBabelOutputPlugin({
       presets: ['@babel/preset-env']

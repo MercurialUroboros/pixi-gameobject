@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "outDir": "dist",
+        "declarationDir": "dist",
         "target": "esnext",
         "module": "esnext",
         "strict": true,
@@ -9,13 +10,14 @@
         "importHelpers": true,
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
-        "sourceMap": true,
         "declaration": true,
-        "declarationDir": "dist"
+        "emitDeclarationOnly": true,
+        "baseUrl": ".",
+        "sourceMap": false,
     },
     "include": [
         "./src/index.ts",
-        "./types/*.d.ts"
+        "src/types/*.d.ts"
     ],
     "exclude": [
         "node_modules",

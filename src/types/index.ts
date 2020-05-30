@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DisplayObject } from 'pixi.js';
 
-export type Methods = {
+type Methods = {
   [key: string]: (...args: any) => any;
 }
 
-export type DefaultObject = {
+type DefaultObject = {
   [key: string]: any;
 }
 
-export type Reactives<T> = () => { [key: string]: any & ThisType<ComponentOptions<T>> }
+type Reactives<T> = () => { [key: string]: any & ThisType<ComponentOptions<T>> }
 
-export type Draw<T> = (c: T) => void;
+type Draw<T> = (c: T) => void;
 
 export interface ComponentOptions<T> {
   name?: string;
