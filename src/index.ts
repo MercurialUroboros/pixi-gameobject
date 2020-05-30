@@ -1,79 +1,60 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DisplayObject } from 'pixi.js'
 import { observe, unobserve, observable } from '@nx-js/observer-util'
-
-export type Methods = {
-  [key: string]: (...args: any) => any;
-}
-
-export type DefaultObject = {
-  [key: string]: any;
-}
-
-export type Reactives<T> = () => { [key: string]: any & ThisType<ComponentOptions<T>> }
-
-export type Draw<T> = (c: T) => void;
-
-export interface ComponentOptions<T> {
-  name?: string;
-  instance?: DisplayObject;
-  created?: () => void;
-  reactives?: Reactives<T> | DefaultObject;
-  watch?: Methods & ThisType<ComponentOptions<T>>;
-  methods?: Methods & ThisType<ComponentOptions<T>>;
-  draw: Draw<T> & ThisType<ComponentOptions<T>>;
-  [key: string]: any;
-}
+import { ComponentOptions } from './types'
 
 export class GameObject<T extends DisplayObject> extends DisplayObject {
-  instance: T
-  observableList: { (): void }[] = []
-  options: ComponentOptions<T>
+  readonly instance: T
+  private observableList: { (): void }[] = []
+  private options: ComponentOptions<T>
   constructor (Ctor: new () => T, options: ComponentOptions<T>) {
     super()
     this.augmentDisplayObject()
 
-    // generate pixi instance
+    // Generate pixi instance throught ctor.
     this.instance = new Ctor()
-    // giving access to the instance on the options object
-    options.instance = this.instance
-    // assigning a name for pixi instance dev-tool
+
+    // Assign name from component options if used
     this.instance.name = options.name ?? 'no-name'
-    // assign context to reactives and making them available on options.
+
+    // Assign options context to reactives properties and making them available on options under this keyword
     if (options.reactives) {
       if (typeof options.reactives === 'function') {
-        options.reactives = options?.reactives()
+        options.reactives = options.reactives.bind(options)()
         Object.entries(options.reactives || {}).forEach(([key, value]) => {
           if (!options.reactives) return
           options[key] = value
         })
         options = observable(options)
       } else {
-        throw new Error('Not a function')
+        throw new Error('Reactives should be a function which returns an object')
       }
     }
 
+    // Assign this context to methods and making them available on options under this keyword
     if (options.methods) {
       Object.entries(options.methods).forEach(([key]) => {
         if (!options.methods) return
         options[key] = options.methods[key].bind(options)
       })
     }
-    // created hook
+
+    // Fire created hook if exists
     options.created && options.created()
-    // draw hook
+
+    // Fire draw hook 
     options.draw(this.instance)
-    // watchers
+
+    // Store copy of options
     this.options = options
 
     this.fireWatchers()
   }
 
-  augmentDisplayObject (): void {
+  private augmentDisplayObject (): void {
     DisplayObject.prototype.destroy = () => this.destroyed()
   }
 
-  fireWatchers (): void {
+  private fireWatchers (): void {
     // TODO don't dire watcher first time round
     // TODO If value is the same don't fire watcher
     // TODO enable previous value
@@ -94,7 +75,7 @@ export class GameObject<T extends DisplayObject> extends DisplayObject {
     }
   }
 
-  destroyed (): void {
+  private destroyed (): void {
     this.observableList.forEach(obs => unobserve(obs))
     this.observableList = []
   }
