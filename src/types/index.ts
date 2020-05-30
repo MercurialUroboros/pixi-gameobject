@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DisplayObject } from 'pixi.js';
-
 type Methods = {
   [key: string]: (...args: any) => any;
 }
@@ -15,7 +13,7 @@ type Draw<T> = (c: T) => void;
 
 export interface ComponentOptions<T> {
   name?: string;
-  instance?: DisplayObject;
+  instance?: T;
   created?: () => void;
   reactives?: Reactives<T> | DefaultObject;
   watch?: Methods & ThisType<ComponentOptions<T>>;
