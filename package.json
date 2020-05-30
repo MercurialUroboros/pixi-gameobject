@@ -1,6 +1,6 @@
 {
   "name": "pixi-gameobject",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A pixi.js library for building single file components",
   "main": "dist/lib.es.js",
   "module": "dist/lib.es.js",
