@@ -12,6 +12,9 @@
     "dev": "rollup -c -w",
     "build": "tsc && rollup -c",
     "lintfix": "eslint . --ext .ts --fix",
+    "release:patch": "npm run build && npm version patch && npm publish && git push origin --follow-tags",
+    "release:minor": "npm run build && npm version minor && npm publish && git push origin --follow-tags",
+    "release:major": "npm run build && npm version major && npm publish && git push origin --follow-tags",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
