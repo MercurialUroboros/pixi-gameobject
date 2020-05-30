@@ -13,6 +13,8 @@ export class GameObject<T extends DisplayObject> extends DisplayObject {
     // Generate pixi instance throught ctor.
     this.instance = new Ctor()
 
+    // Giving access to the instance on the pixi-gamobject-component
+    options.instance = this.instance
     // Assign name from component options if used
     this.instance.name = options.name ?? 'no-name'
 
