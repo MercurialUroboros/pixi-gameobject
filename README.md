@@ -6,7 +6,7 @@ The structure of a pixi-gameobject component is greatly inspired by single-file 
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Use the package manager [npm] to install pixi-gameobject.
 
 ```bash
 npm install pixi-gameobject
